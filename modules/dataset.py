@@ -11,11 +11,11 @@ class Dataset:
     """
     
     def __init__(self, path, country, crop, quantity, accurarcy="irrelevant"):
-        data = self._load_data(path, country, crop, quantity)
-        processed_data = self._preprocess_data(data, quantity, accurarcy)
+        data = self.load_data(path, country, crop, quantity)
+        processed_data = self.preprocess_data(data, country, quantity, accurarcy)
         self.dataset = processed_data
 
-    def _load_data(self, path, country, crop, quantity):
+    def load_data(self, path, country, crop, quantity):
         """
         reads and filters dataset based on user input. 
         """
@@ -52,7 +52,7 @@ class Dataset:
         
         return df
     
-    def _preprocess_data(self, data, quantity, accuracy):
+    def preprocess_data(self, data, country, quantity, accuracy):
         """
         perform basic preprocessing to the data
         """
@@ -98,6 +98,7 @@ class Dataset:
                     
         data["value"] = data["value"].round(2)
         data = data.assign(quantity = quantity)
+        data = data.assign(country = country)
         
         return data
     
